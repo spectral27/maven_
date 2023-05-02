@@ -1,5 +1,7 @@
 package spc;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +14,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MainTest {
+
+    private final ObjectMapper jackson = new ObjectMapper();
 
     @BeforeAll
     public static void beforeAll() {
@@ -43,17 +47,25 @@ public class MainTest {
     public void mainTest() {
         JavaObjectClient client = new JavaObjectClient();
 
-        JavaObject java = new JavaObject();
-        java.setId(1);
-        java.setVendor(System.getProperty("java.vendor"));
-        java.setVersion(System.getProperty("java.version"));
+        JavaObject junit = new JavaObject();
+        junit.setId(1);
+        junit.setVendor("JUnit Jupiter");
+        junit.setVersion("5.9.2");
 
-        client.insertObject(java);
+        client.insertObject(junit);
 
         List<JavaObject> javaObjects = client.selectObjects();
 
         Assertions.assertNotNull(javaObjects);
         Assertions.assertEquals(1, javaObjects.size());
+
+        try {
+            String json = jackson.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(javaObjects);
+            System.out.println(json);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
