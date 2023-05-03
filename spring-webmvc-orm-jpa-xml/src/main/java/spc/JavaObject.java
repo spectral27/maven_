@@ -6,6 +6,16 @@ public class JavaObject {
     private String vendor;
     private String version;
 
+    public JavaObject() {
+        // Jackson constructor
+    }
+
+    public JavaObject(int id, String vendor, String version) {
+        this.id = id;
+        this.vendor = vendor;
+        this.version = version;
+    }
+
     public int getId() {
         return id;
     }

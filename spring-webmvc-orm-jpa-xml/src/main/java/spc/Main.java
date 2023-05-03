@@ -1,7 +1,6 @@
 package spc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 
@@ -27,7 +26,6 @@ public class Main {
 
         Tomcat tomcat = new Tomcat();
         tomcat.getConnector();
-
         tomcat.addWebapp("", new File(".").getAbsolutePath());
 
         try {
@@ -36,44 +34,25 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        JavaObject java = new JavaObject(1, System.getProperty("java.vendor"), System.getProperty("java.version"));
+        JavaObject spring = new JavaObject(2, "Spring Framework", "6.0.8");
+        JavaObject jpa = new JavaObject(3, "Jakarta Persistence API", "3.1.0");
+        JavaObject hibernate = new JavaObject(4, "Hibernate ORM", "6.2.1");
+
+        List<JavaObject> javaObjects = List.of(java, spring, jpa, hibernate);
+
         JavaObjectClient client = new JavaObjectClient();
 
-        JavaObject java = new JavaObject();
-        java.setId(1);
-        java.setVendor(System.getProperty("java.vendor"));
-        java.setVersion(System.getProperty("java.version"));
+        for (JavaObject javaObject : javaObjects) {
+            client.insertObject(javaObject);
+        }
 
-        client.insertObject(java);
+        javaObjects = client.selectObjects();
 
-        JavaObject spring = new JavaObject();
-        spring.setId(2);
-        spring.setVendor("Spring Framework");
-        spring.setVersion("6.0.8");
-
-        client.insertObject(spring);
-
-        JavaObject jpa = new JavaObject();
-        jpa.setId(3);
-        jpa.setVendor("Jakarta Persistence API");
-        jpa.setVersion("3.1.0");
-
-        client.insertObject(jpa);
-
-        JavaObject hibernate = new JavaObject();
-        hibernate.setId(4);
-        hibernate.setVendor("Hibernate ORM");
-        hibernate.setVersion("6.2.1");
-
-        client.insertObject(hibernate);
-
-        List<JavaObject> javaObjects = client.selectObjects();
-
-        ObjectMapper jackson = new ObjectMapper();
+        JacksonPrettyPrinter jacksonPrettyPrinter = new JacksonPrettyPrinter();
 
         try {
-            String json = jackson.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(javaObjects);
-            System.out.println(json);
+            jacksonPrettyPrinter.print(javaObjects);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
