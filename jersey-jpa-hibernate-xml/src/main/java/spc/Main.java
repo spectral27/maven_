@@ -52,7 +52,8 @@ public class Main {
         for (JavaObject javaObject : javaObjects) {
             client.target("http://0.0.0.0:8080/objects")
                     .request()
-                    .post(Entity.entity(javaObject, MediaType.APPLICATION_JSON));
+                    .post(Entity.entity(javaObject, MediaType.APPLICATION_JSON))
+                    .close();
         }
 
         java.setVersion("17.0.7");
@@ -60,7 +61,8 @@ public class Main {
         client.target("http://0.0.0.0:8080/objects")
                 .path("1")
                 .request()
-                .put(Entity.entity(java, MediaType.APPLICATION_JSON));
+                .put(Entity.entity(java, MediaType.APPLICATION_JSON))
+                .close();
 
         javaObjects = client.target("http://0.0.0.0:8080/objects")
                 .request()

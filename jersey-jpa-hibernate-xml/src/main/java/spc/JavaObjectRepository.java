@@ -43,4 +43,13 @@ public class JavaObjectRepository {
         entityManager.close();
     }
 
+    public void deleteJavaObject(int id) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        JavaObject javaObject = entityManager.find(JavaObject.class, id);
+        entityManager.remove(javaObject);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
 }
