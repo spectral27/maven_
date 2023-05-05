@@ -45,11 +45,13 @@ public class Main {
         JavaObject java = new JavaObject(1, System.getProperty("java.vendor"), System.getProperty("java.version"));
         JavaObject jersey = new JavaObject(2, "Jersey Framework", "3.1.1");
         JavaObject hibernate = new JavaObject(3, "Hibernate ORM", "6.2.2");
+        JavaObject toDelete = new JavaObject(4, "", "");
 
-        List<JavaObject> javaObjects = List.of(java, jersey, hibernate);
+        List<JavaObject> javaObjects = List.of(java, jersey, hibernate, toDelete);
 
         Client client = ClientBuilder.newClient();
 
+        // Insert
         for (JavaObject javaObject : javaObjects) {
             client.target("http://0.0.0.0:8080/objects")
                     .request()
@@ -57,6 +59,7 @@ public class Main {
                     .close();
         }
 
+        // Update
         java.setVersion("17.0.7");
 
         client.target("http://0.0.0.0:8080/objects")
@@ -65,6 +68,14 @@ public class Main {
                 .put(Entity.entity(java, MediaType.APPLICATION_JSON))
                 .close();
 
+        // Delete
+        client.target("http://0.0.0.0:8080/objects")
+                .path("4")
+                .request()
+                .delete()
+                .close();
+
+        // Select
         javaObjects = client.target("http://0.0.0.0:8080/objects")
                 .request()
                 .get(new GenericType<>() {});

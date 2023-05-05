@@ -100,12 +100,24 @@
                                         <exclude>module-info.class</exclude>
                                     </excludes>
                                 </filter>
+
+                                <filter>
+                                    <artifact>javax.xml.bind:jaxb-api</artifact>
+                                    <excludes>
+                                        <exclude>javax/xml/bind/</exclude>
+                                        <exclude>META-INF/</exclude>
+                                        <exclude>module-info.class</exclude>
+                                    </excludes>
+                                </filter>
                             </filters>
+
+                            <!--
                             <artifactSet>
                                 <excludes>
                                     <exclude>javax.xml.bind:jaxb-api</exclude>
                                 </excludes>
                             </artifactSet>
+                            -->
                         </configuration>
                     </execution>
                 </executions>

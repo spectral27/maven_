@@ -34,4 +34,11 @@ public class JavaObjectController {
         return Response.status(Response.Status.OK).build();
     }
 
+    @DELETE
+    @Path("/{id}")
+    public Response deleteJavaObject(@PathParam("id") int id) {
+        repository.deleteJavaObject(id);
+        return Response.status(Response.Status.OK).build();
+    }
+
 }
