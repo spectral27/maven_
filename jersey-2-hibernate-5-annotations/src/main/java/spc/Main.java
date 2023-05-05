@@ -41,8 +41,8 @@ public class Main {
         GrizzlyHttpServerFactory.createHttpServer(URI.create("http://0.0.0.0:8080"), resourceConfig);
 
         JavaObject java = new JavaObject(1, System.getProperty("java.vendor"), System.getProperty("java.version"));
-        JavaObject jersey = new JavaObject(2, "Jersey Framework", "3.1.1");
-        JavaObject hibernate = new JavaObject(3, "Hibernate ORM", "6.2.2");
+        JavaObject jersey = new JavaObject(2, "Jersey Framework", "2.39.1");
+        JavaObject hibernate = new JavaObject(3, "Hibernate ORM", "5.6.15");
         JavaObject toDelete = new JavaObject(4, "", "");
 
         List<JavaObject> javaObjects = List.of(java, jersey, hibernate, toDelete);
