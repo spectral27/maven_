@@ -30,7 +30,7 @@ public class JavaObjectController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateJavaObject(@PathParam("id") int id, JavaObject javaObject) {
-        repository.updateJavaObject(id, javaObject.getVersion());
+        repository.updateJavaObject(id, javaObject);
         return Response.status(Response.Status.OK).build();
     }
 

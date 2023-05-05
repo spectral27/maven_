@@ -5,11 +5,6 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
 import java.net.URI;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -49,38 +44,22 @@ public class Main {
 
         List<JavaObject> javaObjects = List.of(java, jersey, hibernate, toDelete);
 
-        Client client = ClientBuilder.newClient();
+        JavaObjectClient client = new JavaObjectClient();
 
         // Insert
         for (JavaObject javaObject : javaObjects) {
-            client.target("http://0.0.0.0:8080/objects")
-                    .request()
-                    .post(Entity.entity(javaObject, MediaType.APPLICATION_JSON))
-                    .close();
+            client.insert(javaObject);
         }
 
         // Update
         java.setVersion("17.0.7");
-
-        client.target("http://0.0.0.0:8080/objects")
-                .path("1")
-                .request()
-                .put(Entity.entity(java, MediaType.APPLICATION_JSON))
-                .close();
+        client.update(java);
 
         // Delete
-        client.target("http://0.0.0.0:8080/objects")
-                .path("4")
-                .request()
-                .delete()
-                .close();
+        client.delete(toDelete);
 
         // Select
-        javaObjects = client.target("http://0.0.0.0:8080/objects")
-                .request()
-                .get(new GenericType<>() {});
-
-        client.close();
+        javaObjects = client.select();
 
         JacksonPrettyPrinter jacksonPrettyPrinter = new JacksonPrettyPrinter();
         try {

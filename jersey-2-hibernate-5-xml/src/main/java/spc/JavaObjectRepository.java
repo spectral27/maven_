@@ -36,12 +36,12 @@ public class JavaObjectRepository {
         return javaObjects;
     }
 
-    public void updateJavaObject(int id, String version) {
+    public void updateJavaObject(int id, JavaObject javaObject) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        JavaObject javaObject = session.find(JavaObject.class, id);
-        javaObject.setVersion(version);
-        session.merge(javaObject);
+        JavaObject javaObjectToUpdate = session.find(JavaObject.class, id);
+        javaObjectToUpdate.setVersion(javaObject.getVersion());
+        session.merge(javaObjectToUpdate);
         session.getTransaction().commit();
         session.close();
     }
