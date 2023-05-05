@@ -1,0 +1,2 @@
+mvn clean package
+java -jar target/spring-webmvc-orm-jpa-xml-1.0.jar

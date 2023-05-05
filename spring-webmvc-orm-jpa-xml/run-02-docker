@@ -1,0 +1,14 @@
+mvn clean package
+docker rm -f spring-webmvc-orm-jpa-xml-container
+docker rmi -f spring-webmvc-orm-jpa-xml-image
+
+touch Dockerfile
+echo 'FROM amazoncorretto:17-alpine' >> Dockerfile
+echo 'COPY target/spring-webmvc-orm-jpa-xml-1.0.jar run.jar' >> Dockerfile
+echo 'ENTRYPOINT ["java", "-jar", "run.jar"]' >> Dockerfile
+
+docker build -t spring-webmvc-orm-jpa-xml-image .
+
+rm Dockerfile
+
+docker run --name spring-webmvc-orm-jpa-xml-container --rm spring-webmvc-orm-jpa-xml-image
