@@ -40,12 +40,12 @@ public class Main {
 
         GrizzlyHttpServerFactory.createHttpServer(URI.create("http://0.0.0.0:8080"), resourceConfig);
 
-        JavaObject java = new JavaObject(1, System.getProperty("java.vendor"), System.getProperty("java.version"));
-        JavaObject jersey = new JavaObject(2, "Jersey Framework", "2.39.1");
-        JavaObject hibernate = new JavaObject(3, "Hibernate ORM", "5.6.15");
-        JavaObject toDelete = new JavaObject(4, "", "");
-
-        List<JavaObject> javaObjects = List.of(java, jersey, hibernate, toDelete);
+        List<JavaObject> javaObjects = List.of(
+                new JavaObject(1, System.getProperty("java.vendor"), System.getProperty("java.version")),
+                new JavaObject(2, "Jersey Framework", "2.39.1"),
+                new JavaObject(3, "Hibernate ORM", "5.6.15"),
+                new JavaObject(99, "To Delete", "1.0.0")
+        );
 
         JavaObjectClient client = new JavaObjectClient();
 
@@ -54,12 +54,16 @@ public class Main {
             client.insert(javaObject);
         }
 
+        JavaObjectRepository repository = new JavaObjectRepository();
+        System.out.println(repository.getIds());
+
         // Update
-        java.setVersion("17.0.7");
-        client.update(java);
+        JavaObject forUpdate = new JavaObject();
+        forUpdate.setVersion("17.0.7");
+        client.update(1, forUpdate);
 
         // Delete
-        client.delete(toDelete);
+        client.delete(99);
 
         // Select
         javaObjects = client.select();

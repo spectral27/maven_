@@ -30,14 +30,14 @@ public class JavaObjectController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateJavaObject(@PathParam("id") int id, JavaObject javaObject) {
-        repository.updateJavaObject(id, javaObject);
+        repository.update(id, javaObject);
         return Response.status(Response.Status.OK).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteJavaObject(@PathParam("id") int id) {
-        repository.deleteJavaObject(id);
+        repository.delete(id);
         return Response.status(Response.Status.OK).build();
     }
 

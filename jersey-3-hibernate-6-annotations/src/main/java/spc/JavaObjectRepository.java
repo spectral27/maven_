@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.MutationQuery;
 
 import java.util.List;
 
@@ -51,6 +52,17 @@ public class JavaObjectRepository {
         session.beginTransaction();
         JavaObject javaObject = session.find(JavaObject.class, id);
         session.remove(javaObject);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void update(int id, JavaObject javaObject) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        MutationQuery query = session.createMutationQuery("update JavaObject j set j.version = :version where j.id = :id");
+        query.setParameter("version", javaObject.getVersion());
+        query.setParameter("id", id);
+        query.executeUpdate();
         session.getTransaction().commit();
         session.close();
     }

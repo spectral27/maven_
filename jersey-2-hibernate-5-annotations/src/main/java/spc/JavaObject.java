@@ -2,10 +2,8 @@ package spc;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "java_object")
 public class JavaObject {
 
     @Id

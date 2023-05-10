@@ -19,17 +19,17 @@ public class JavaObjectClient {
                 .close();
     }
 
-    public void update(JavaObject javaObject) {
+    public void update(int id, JavaObject javaObject) {
         client.target(url)
-                .path(String.valueOf(javaObject.getId()))
+                .path(String.valueOf(id))
                 .request()
                 .put(Entity.entity(javaObject, MediaType.APPLICATION_JSON))
                 .close();
     }
 
-    public void delete(JavaObject javaObject) {
+    public void delete(int id) {
         client.target(url)
-                .path(String.valueOf(javaObject.getId()))
+                .path(String.valueOf(id))
                 .request()
                 .delete()
                 .close();
