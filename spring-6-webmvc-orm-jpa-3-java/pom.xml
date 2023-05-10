@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>spring-webmvc-orm-jpa-java</artifactId>
+    <artifactId>spring-6-webmvc-orm-jpa-3-java</artifactId>
     <version>1.0</version>
 
     <properties>
