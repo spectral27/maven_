@@ -54,9 +54,6 @@ public class Main {
             client.insert(javaObject);
         }
 
-        JavaObjectRepository repository = new JavaObjectRepository();
-        System.out.println(repository.getIds());
-
         // Update
         JavaObject forUpdate = new JavaObject();
         forUpdate.setVersion("17.0.7");
