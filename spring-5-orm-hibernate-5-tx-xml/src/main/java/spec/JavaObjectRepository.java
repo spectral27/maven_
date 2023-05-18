@@ -12,14 +12,29 @@ public class JavaObjectRepository {
         this.sessionFactory = sessionFactory;
     }
 
-    public void insertJavaObject(JavaObject javaObject) {
+    public void insert(JavaObject javaObject) {
         sessionFactory.getCurrentSession().save(javaObject);
     }
 
-    public List<JavaObject> selectJavaObjects() {
+    public List<JavaObject> selectAll() {
         return sessionFactory.getCurrentSession()
                 .createQuery("select j from JavaObject j", JavaObject.class)
                 .getResultList();
+    }
+
+    public JavaObject select(int id) {
+        return sessionFactory.getCurrentSession().get(JavaObject.class, id);
+    }
+
+    public void update(JavaObject javaObject) {
+        sessionFactory.getCurrentSession().update(javaObject);
+    }
+
+    public void delete(int id) {
+        sessionFactory.getCurrentSession()
+                .createQuery("delete from JavaObject j where j.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
 }

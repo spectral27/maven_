@@ -14,11 +14,23 @@ public class JavaObjectService {
     }
 
     public void insert(JavaObject javaObject) {
-        repository.insertJavaObject(javaObject);
+        repository.insert(javaObject);
     }
 
-    public List<JavaObject> select() {
-        return repository.selectJavaObjects();
+    public List<JavaObject> selectAll() {
+        return repository.selectAll();
+    }
+
+    public JavaObject select(int id) {
+        return repository.select(id);
+    }
+
+    public void update(JavaObject javaObject) {
+        repository.update(javaObject);
+    }
+
+    public void delete(int id) {
+        repository.delete(id);
     }
 
 }

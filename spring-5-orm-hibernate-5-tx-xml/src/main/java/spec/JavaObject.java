@@ -6,6 +6,16 @@ public class JavaObject {
     private String vendor;
     private String version;
 
+    public JavaObject() {
+        // Hibernate
+    }
+
+    public JavaObject(int id, String vendor, String version) {
+        this.id = id;
+        this.vendor = vendor;
+        this.version = version;
+    }
+
     public int getId() {
         return id;
     }
@@ -28,6 +38,11 @@ public class JavaObject {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Id: %d\nVendor: %s\nVersion: %s", id, vendor, version);
     }
 
 }

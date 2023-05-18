@@ -2,48 +2,31 @@ package spec;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        try {
-            Class.forName("org.h2.Driver");
-            DriverManager.getConnection(
-                    "jdbc:h2:mem:database01;INIT=runscript from 'classpath:init.sql'",
-                    "username",
-                    "password"
-            );
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+        H2DatabaseInit.init();
 
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans1.xml");
-
         JavaObjectService service = context.getBean(JavaObjectService.class);
 
-        JavaObject java = new JavaObject();
-        java.setId(1);
-        java.setVendor(System.getProperty("java.vendor"));
-        java.setVersion(System.getProperty("java.version"));
-
-        service.insert(java);
-
-        JavaObject another = new JavaObject();
-        another.setId(1);
-        another.setVendor(System.getProperty("java.vendor"));
-        another.setVersion(System.getProperty("java.version"));
+        JavaObject object = new JavaObject(1, System.getProperty("java.vendor"), System.getProperty("java.version"));
+        service.insert(object);
 
         // Transaction rollback (duplicate primary key)
+        JavaObject another = new JavaObject(1, "Vendor", "Version");
+
         try {
             service.insert(another);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        //
 
-        service.select().forEach(j -> System.out.println(j.getVendor() + " " + j.getVersion()));
+        List<JavaObject> objects = service.selectAll();
+        objects.forEach(System.out::println);
     }
 
 }
