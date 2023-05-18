@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>spec</groupId>
-    <artifactId>orm-hibernate-5-tx-xml</artifactId>
+    <artifactId>spring-5-orm-hibernate-5-tx-xml</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
