@@ -15,7 +15,7 @@ public class Main {
         JavaObject object = new JavaObject(1, System.getProperty("java.vendor"), System.getProperty("java.version"));
         service.insert(object);
 
-        // Transaction rollback (duplicate primary key)
+        // ** Transaction rollback (duplicate primary key)
         JavaObject another = new JavaObject(1, "Vendor", "Version");
 
         try {
@@ -23,7 +23,7 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        //
+        // **
 
         List<JavaObject> objects = service.selectAll();
         objects.forEach(System.out::println);
