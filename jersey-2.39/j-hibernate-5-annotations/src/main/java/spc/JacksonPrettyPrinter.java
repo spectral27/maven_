@@ -1,0 +1,26 @@
+package spc;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class JacksonPrettyPrinter {
+
+    private final ObjectMapper jackson;
+    private final DefaultPrettyPrinter printer;
+
+    public JacksonPrettyPrinter() {
+        jackson = new ObjectMapper();
+        DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter("  ", "\n");
+        printer = new DefaultPrettyPrinter();
+        printer.indentObjectsWith(indenter);
+        printer.indentArraysWith(indenter);
+    }
+
+    public void print(Object object) throws JsonProcessingException {
+        String json = jackson.writer(printer).writeValueAsString(object);
+        System.out.println(json);
+    }
+
+}
